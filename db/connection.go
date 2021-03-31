@@ -14,6 +14,7 @@ type Connection struct {
 	prodFS    *firestore.Client // UNEXPORTED
 }
 
+// NewConnection initializes a base connection - currently Firestore exported field is nil.
 func NewConnection(ctx context.Context) (*Connection, error) {
 	demo, _ := firestore.NewClient(ctx, "demo")
 	prod, _ := firestore.NewClient(ctx, "prod")
