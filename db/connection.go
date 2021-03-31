@@ -23,7 +23,7 @@ func NewConnection(ctx context.Context) (*Connection, error) {
 	}, nil
 }
 
-// Connect will store inside firestore, a pointer to a connection based on mode.
+// Connect will store inside connection, a pointer to a firestore connection based on mode.
 func (c *Connection) Connect() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		if ctx.GetBool("demoMode") {
