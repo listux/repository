@@ -8,10 +8,13 @@ import (
 	"cloud.google.com/go/firestore"
 )
 
+const (
+	firestoreKey = "firestore"
+)
+
 type Connection struct {
-	Firestore *firestore.Client
-	demoFS    *firestore.Client // UNEXPORTED
-	prodFS    *firestore.Client // UNEXPORTED
+	demoFS *firestore.Client // UNEXPORTED
+	prodFS *firestore.Client // UNEXPORTED
 }
 
 func NewConnection(ctx context.Context) (*Connection, error) {
@@ -27,9 +30,15 @@ func NewConnection(ctx context.Context) (*Connection, error) {
 func (c *Connection) Connect() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		if ctx.GetBool("demoMode") {
-			c.Firestore = c.demoFS
+			ctx.Set(firestoreKey, c.demoFS)
 		} else {
-			c.Firestore = c.prodFS
+			ctx.Set(firestoreKey, c.prodFS)
 		}
 	}
+}
+
+// Firestore returns a pointer to the selected firestore depending on firestoreKey on context
+// (not related to gin.Context)
+func (c *Connection) Firestore(ctx context.Context) *firestore.Client {
+	return ctx.Value(firestoreKey).(*firestore.Client)
 }

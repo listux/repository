@@ -21,8 +21,9 @@ func main() {
 	group := router.Group("/v1", conn.Connect()) // connect will construct inside "conn" a pointer to the selected firestore
 	{
 		mhs := example.NewMyHandlerStruct(logger, conn)
-		group.GET("/my_handler", mhs.MyHandler)
+		group.GET("/myHandler", mhs.MyHandler)
 	}
 
 	// ...
+	router.Run()
 }

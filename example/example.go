@@ -23,5 +23,5 @@ func NewMyHandlerStruct(log *log.Logger, conn *db.Connection) *MyHandlerStruct {
 func (t *MyHandlerStruct) MyHandler(ctx *gin.Context) {
 	// so instead of the original suggestion:
 	// t.FirestoreClient.Collection("customers")...
-	t.Firestore.Collection("customers").Doc("aaaa").Get(ctx)
+	t.Firestore(ctx).Collection("customers").Doc("aaaa").Get(ctx)
 }
